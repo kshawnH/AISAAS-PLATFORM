@@ -32,7 +32,7 @@
 
 ## 🚨 Tutorial
 
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>. 
+This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>.
 
 If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
 
@@ -40,7 +40,7 @@ If you prefer visual learning, this is the perfect resource for you. Follow our 
 
 ## <a name="introduction">🤖 Introduction</a>
 
-Build an AI image SaaS platform that excels in image processing capabilities, integrates a secure payment infrastructure, offers advanced image search functionalities, and supports multiple AI features, including image restoration, recoloring, object removal, generative filling, and background removal. This project can be a guide for your next AI image tool and a boost to your portfolio. 
+Build an AI image SaaS platform that excels in image processing capabilities, integrates a secure payment infrastructure, offers advanced image search functionalities, and supports multiple AI features, including image restoration, recoloring, object removal, generative filling, and background removal. This project can be a guide for your next AI image tool and a boost to your portfolio.
 
 If you're getting started and need assistance or face any bugs, join our active Discord community with over 27k+ members. It's a place where people help each other out.
 
@@ -89,8 +89,7 @@ If you're getting started and need assistance or face any bugs, join our active 
 
 👉 **Responsive UI/UX**: A seamless experience across devices with a user-friendly interface
 
-
-and many more, including code architecture and reusability 
+and many more, including code architecture and reusability
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
@@ -107,8 +106,8 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/adrianhajdin/imaginify.git
-cd imaginify
+git clone https://github.com/adrianhajdin/hsj.git
+cd hsj
 ```
 
 **Installation**
@@ -350,7 +349,7 @@ module.exports = {
 }
 
 .auth {
-  @apply flex-center min-h-screen w-full bg-purple-100
+  @apply flex-center min-h-screen w-full bg-purple-100;
 }
 
 .root {
@@ -358,7 +357,7 @@ module.exports = {
 }
 
 .root-container {
-  @apply mt-16 flex-1 overflow-auto py-8 lg:mt-0 lg:max-h-screen lg:py-10
+  @apply mt-16 flex-1 overflow-auto py-8 lg:mt-0 lg:max-h-screen lg:py-10;
 }
 
 /* ========================================== TAILWIND STYLES */
@@ -934,7 +933,8 @@ const TransactionSchema = new Schema({
   },
 });
 
-const Transaction = models?.Transaction || model("Transaction", TransactionSchema);
+const Transaction =
+  models?.Transaction || model("Transaction", TransactionSchema);
 
 export default Transaction;
 ```
@@ -1072,7 +1072,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     });
 
     if (!updatedUser) throw new Error("User update failed");
-    
+
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
     handleError(error);
@@ -1108,11 +1108,11 @@ export async function updateCredits(userId: string, creditFee: number) {
 
     const updatedUserCredits = await User.findOneAndUpdate(
       { _id: userId },
-      { $inc: { creditBalance: creditFee }},
+      { $inc: { creditBalance: creditFee } },
       { new: true }
-    )
+    );
 
-    if(!updatedUserCredits) throw new Error("User credits update failed");
+    if (!updatedUserCredits) throw new Error("User credits update failed");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
@@ -1261,7 +1261,7 @@ export const download = (url: string, filename: string) => {
 
 // DEEP MERGE OBJECTS
 export const deepMergeObjects = (obj1: any, obj2: any) => {
-  if(obj2 === null || obj2 === undefined) {
+  if (obj2 === null || obj2 === undefined) {
     return obj1;
   }
 
@@ -1499,7 +1499,8 @@ export async function POST(req: Request) {
 
   // CREATE
   if (eventType === "user.created") {
-    const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
+    const { id, email_addresses, image_url, first_name, last_name, username } =
+      evt.data;
 
     const user = {
       clerkId: id,
@@ -1821,13 +1822,14 @@ import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
 
-import { v2 as cloudinary } from 'cloudinary'
+import { v2 as cloudinary } from "cloudinary";
 
-const populateUser = (query: any) => query.populate({
-  path: 'author',
-  model: User,
-  select: '_id firstName lastName clerkId'
-})
+const populateUser = (query: any) =>
+  query.populate({
+    path: "author",
+    model: User,
+    select: "_id firstName lastName clerkId",
+  });
 
 // ADD IMAGE
 export async function addImage({ image, userId, path }: AddImageParams) {
@@ -1843,13 +1845,13 @@ export async function addImage({ image, userId, path }: AddImageParams) {
     const newImage = await Image.create({
       ...image,
       author: author._id,
-    })
+    });
 
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 
@@ -1868,13 +1870,13 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
       imageToUpdate._id,
       image,
       { new: true }
-    )
+    );
 
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 
@@ -1885,9 +1887,9 @@ export async function deleteImage(imageId: string) {
 
     await Image.findByIdAndDelete(imageId);
   } catch (error) {
-    handleError(error)
-  } finally{
-    redirect('/')
+    handleError(error);
+  } finally {
+    redirect("/");
   }
 }
 
@@ -1898,16 +1900,20 @@ export async function getImageById(imageId: string) {
 
     const image = await populateUser(Image.findById(imageId));
 
-    if(!image) throw new Error("Image not found");
+    if (!image) throw new Error("Image not found");
 
     return JSON.parse(JSON.stringify(image));
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 
 // GET IMAGES
-export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
+export async function getAllImages({
+  limit = 9,
+  page = 1,
+  searchQuery = "",
+}: {
   limit?: number;
   page: number;
   searchQuery?: string;
@@ -1920,12 +1926,12 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       api_key: process.env.CLOUDINARY_API_KEY,
       api_secret: process.env.CLOUDINARY_API_SECRET,
       secure: true,
-    })
+    });
 
-    let expression = 'folder=imaginify';
+    let expression = "folder=hsj";
 
     if (searchQuery) {
-      expression += ` AND ${searchQuery}`
+      expression += ` AND ${searchQuery}`;
     }
 
     const { resources } = await cloudinary.search
@@ -1936,21 +1942,21 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
 
     let query = {};
 
-    if(searchQuery) {
+    if (searchQuery) {
       query = {
         publicId: {
-          $in: resourceIds
-        }
-      }
+          $in: resourceIds,
+        },
+      };
     }
 
-    const skipAmount = (Number(page) -1) * limit;
+    const skipAmount = (Number(page) - 1) * limit;
 
     const images = await populateUser(Image.find(query))
       .sort({ updatedAt: -1 })
       .skip(skipAmount)
       .limit(limit);
-    
+
     const totalImages = await Image.find(query).countDocuments();
     const savedImages = await Image.find().countDocuments();
 
@@ -1958,9 +1964,9 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       data: JSON.parse(JSON.stringify(images)),
       totalPage: Math.ceil(totalImages / limit),
       savedImages,
-    }
+    };
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 
@@ -2264,7 +2270,7 @@ export async function POST(request: Request) {
     };
 
     const newTransaction = await createTransaction(transaction);
-    
+
     return NextResponse.json({ message: "OK", transaction: newTransaction });
   }
 
@@ -2517,7 +2523,6 @@ export default Profile;
 ```
 
 </details>
-
 
 ## <a name="links">🔗 Links</a>
 
